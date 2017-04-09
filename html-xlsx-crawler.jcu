@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace_user>
+	<active_project>
+		<label>html-xlsx-crawler</label>
+	</active_project>
+	<projects>
+		<project>
+			<label>html-xlsx-crawler</label>
+			<showfiles>false</showfiles>
+		</project>
+	</projects>
+	<open_files>
+		<docitem>
+			<path>crawler.java</path>
+			<source>true</source>
+			<index>0</index>
+			<active>true</active>
+		</docitem>
+		<docitem>
+			<path>example.java</path>
+			<source>true</source>
+			<index>1</index>
+			<active>false</active>
+		</docitem>
+	</open_files>
+	<symboltables>
+		<symboltable>
+			<path>..\..\..\..\..\..\Program Files\Java\jdk1.8.0_121\lib\jaunt\examples\Example19.java.sdk</path>
+			<symbols/>
+		</symboltable>
+		<symboltable>
+			<path>example.java.sdk</path>
+			<symbols>
+				<symbol>example</symbol>
+			</symbols>
+		</symboltable>
+		<symboltable>
+			<path>crawler.java.sdk</path>
+			<symbols>
+				<symbol>crawler</symbol>
+			</symbols>
+		</symboltable>
+	</symboltables>
+</workspace_user>

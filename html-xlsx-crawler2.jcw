@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<workspace>
+	<settings>
+		<label>html-xlsx-crawler</label>
+		<id>0</id>
+		<version>0</version>
+	</settings>
+	<users>
+		<user>
+			<path>html-xlsx-crawler2.jcu</path>
+		</user>
+	</users>
+	<projects>
+		<project>
+			<path>html-xlsx-crawler.jcp</path>
+		</project>
+	</projects>
+</workspace>
