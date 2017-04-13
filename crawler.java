@@ -38,83 +38,56 @@ public class crawler {
     private final static int CITA_COLUMN = 14;
 	
 	public static void main (String[] args){
-		//UserAgent object represents a headless browser.
-		read("https://govt.westlaw.com/nycrr/");
+		crawl("https://govt.westlaw.com/nycrr/");
 	}
 	
-	public static void read(String item){
-		Elements links = null;
-		Elements children = null;
-		
-		try{
-			UserAgent userAgent = new UserAgent();  //find the first anchor having href, get href value (below)
-			userAgent.visit(item);
-			links = userAgent.doc.findEach("<a name>");
-			System.out.println("Found " + links.size() + " tables:");
-			for (Element anchor : links){
-				//System.out.println(anchor.outerHTML() + "\n----------\n");
+	public static void crawl(String item){
+		if (!hasChild(item)){
+			citation(item);
+		}
+		else{
+			try{
+				UserAgent userAgent = new UserAgent();
+				userAgent.visit(item);
+				
+				Elements links = userAgent.doc.findEach("<a name>");
+				System.out.println("----------------------------------");
+				System.out.println("Found " + links.size() + " tables:");
+				System.out.println("----------------------------------");
+				
 				String link, title_num, subject;
-				try{
-					link = anchor.getAt("href");	//cell value of numRow++ in excel sheet
-					System.out.println(link);
-					title_num = anchor.getText();
-					System.out.println(title_num);
-					try {
-						UserAgent child = new UserAgent();
-						child.visit(link);
-						children = child.doc.findEach("<a name>");
-						if (children.size() > 0){
-							read(link);
-						}
-						else{	//has reached leaf node: a NYCRR requirement
-							citation(link);
-						}
+				for (Element anchor : links){
+					try{
+						link = anchor.getAt("href");
+						System.out.println(link);
+						title_num = anchor.getText();
+						System.out.println(title_num);
+						
+						crawl(link);
 					}
-					catch (ResponseException e){
-						System.err.println(e);
+					catch (NotFound e){
+						System.out.println("");
 					}
 				}
-				catch (NotFound e){
-					System.out.println("");
-				}
-				System.out.println("");
-			}
-	    }
-	    //catch(SearchException e){        //if an element or attribute isn't found, catch the exception.
-	    //	System.err.println(e);         //printing exception shows details regarding origin of error
-	    //}
-	    catch(ResponseException e){      //in case of HTTP/Connection error, catch ResponseExeption
-	    	System.err.println(e);         //printing exception shows HTTP error information or connection error
-	    }
+		    }
+		    catch(ResponseException e){      //in case of HTTP/Connection error, catch ResponseExeption
+		    	System.err.println(e);         //printing exception shows HTTP error information or connection error
+		    }
+		}
 	}
-	/*
-	public static void crawl(String link){
-		Elements links = null;
-		System.out.println("	Child Element:");
-		try{
+	
+	public static boolean hasChild(String link){
+		try {
 			UserAgent child = new UserAgent();
 			child.visit(link);
-			links = child.doc.findEach("<a name>");
-			System.out.println("	Found " + links.size() + " children");
-			for (Element chAnchor : links){
-				String next, chapter, subject;
-				try{
-					next = chAnchor.getAt("href");
-					System.out.println("	" + next);
-					chapter = chAnchor.getText();
-					System.out.println("	" + chapter);
-				}
-				catch (NotFound e){
-					System.out.println("");
-				}
-				System.out.println("");
-			}
+			Elements children = child.doc.findEach("<a name>");
+			return children.size() > 0;
 		}
 		catch (ResponseException e){
 			System.err.println(e);
 		}
+		return false;
 	}
-	*/
 	
 	public static void citation(String link){
 		System.out.println("REQUIREMENT LEVEL REACHED");
